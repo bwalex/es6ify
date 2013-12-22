@@ -13,7 +13,14 @@ test('\nsyntax error', function (t) {
     .transform(es6ify)
     .require(__dirname + '/bundle/syntax-error.js', { entry: true })
     .bundle(function (err, src) {
-      t.equal(err.message, path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:13 \'}\' expected');
+      t.equal(err.message, [
+              path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:9 \'identifier\' expected',
+              path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:10 \'(\' expected',
+              path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:13 \'}\' expected',
+              path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:13 \')\' expected',
+              path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:13 \'{\' expected',
+              path.resolve(__dirname + '/bundle/syntax-error.js') + ':1:13 \'}\' expected'
+      ].join('\n'));
       t.end();
     });
 });
