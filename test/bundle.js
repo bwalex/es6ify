@@ -30,12 +30,15 @@ var format     =  require('util').format;
       
     browserify()
       .transform(es6ify)
+      .add(es6ify.runtime)
       .require(__dirname + '/bundle/' + filename + '.js', { entry: true })
       .bundle(function (err, src) {
         if (err) t.fail(err);
+        console.log('src:\n' + src);
         vm.runInNewContext(src, {
             window: {}, 
-            console: { log: log }
+	    console: console
+            //console: { log: log }
         });
         t.end()
       });
